@@ -1,0 +1,100 @@
+.container {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+
+}
+
+.filter-container {
+  display: flex;
+  width: 50%;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  justify-content: space-around;
+  height: 100px;
+  border-radius: 5px;
+  margin-top: -50px;
+  border-top-left-radius: 8px;
+  position: absolute;
+  z-index: 1;
+  margin-left: 25%;
+  box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+}
+
+.filter-select {
+  min-width: 150px;
+  margin-right: 10px;
+}
+
+button.buy-ticket-button {
+  background-color: #d32f2e;
+  color: white;
+  transition: background-color 0.3s;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  height: 50px;
+}
+
+button.buy-ticket-button:hover {
+  background-color: #d32f2e;
+}
+
+.buy-ticket-title {
+  font-size: 20px;
+  font-weight: 200;
+  color: #ffffff;
+}
+
+.movies-container {
+  margin-top: 50px;
+}
+
+.movie-card {
+  margin: 10px;
+  transition: transform 0.1s, box-shadow 0.3s;
+  cursor: pointer;
+  height: 450px;
+  box-shadow: none !important;
+}
+
+.movie-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.movie-image {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 300px;
+  border-radius: 5px;
+}
+
+.movie-title {
+  font-weight: bold;
+  color: #000000;
+  text-overflow: ellipsis;
+}
+
+.movie-description {
+  color: #9d9d9d;
+  min-height: 40px;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  margin: 0 5px;
+}
+
+.pagination-controls .MuiTypography-root {
+  margin: 0 15px;
+}
