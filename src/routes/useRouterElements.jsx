@@ -4,7 +4,8 @@ import Login from "../modules/Auth/Login/Login";
 import AuthLayout from "../layouts/AuthLayout/AuthLayout";
 import Register from "../modules/Auth/Register/Register";
 import MainLayout from "../layouts/MainLayout/MainLayout";
-import HomePage from "../modules/Home/HomePage";
+import HomePage from "../modules/Home/HomePage/HomePage";
+
 
 export default function useRouterElements() {
   const element = useRoutes([

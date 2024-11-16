@@ -4,7 +4,6 @@
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
-
 }
 
 .filter-container {
@@ -97,4 +96,41 @@ button.buy-ticket-button:hover {
 
 .pagination-controls .MuiTypography-root {
   margin: 0 15px;
+}
+
+/* cụm rapk */
+
+.cumRap {
+  background: url("/src/assets/img/back-news.b9861f84.png");
+  margin-top: 30px;
+  padding-top: 120px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-bottom: 50px;
+  border-radius: 10px;
+}
+
+.cinema-card {
+  background-color: #f9f9f9; /* Màu nền cho card */
+  border: 1px solid #e0e0e0; /* Đường viền */
+  border-radius: 8px; /* Bo góc */
+  padding: 16px; /* Khoảng cách bên trong */
+  margin-bottom: 16px; /* Khoảng cách giữa các card */
+  display: flex; /* Để căn chỉnh nội dung */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.cinema-card img {
+  width: 50px; /* Kích thước logo */
+  margin-right: 8px; /* Khoảng cách giữa logo và tên rạp */
+}
+
+.cinema-card h6 {
+  font-weight: bold; /* Đậm cho tên rạp */
+  margin: 0; /* Bỏ khoảng cách mặc định */
+}
+
+.cinema-card p {
+  margin: 4px 0; /* Khoảng cách giữa các đoạn văn */
+  color: #555; /* Màu chữ cho địa chỉ */
 }

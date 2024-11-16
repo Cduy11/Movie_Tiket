@@ -5,7 +5,6 @@ import fetcher from "../../apis/fetcher";
 export const bannerApi = createAsyncThunk("banner/bannerApi", async () => {
   try {
     const response = await fetcher.get(`/QuanLyPhim/LayDanhSachBanner`);
-    console.log(response.data.content);
     return response.data.content;
   } catch (error) {
     throw error.response ? error.response.data : error.message;

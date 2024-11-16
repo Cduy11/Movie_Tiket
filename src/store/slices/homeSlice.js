@@ -11,7 +11,9 @@ export const listMoviePagination = createAsyncThunk(
       );
       return response.data.content;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error.message);
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
     }
   }
 );
@@ -25,16 +27,18 @@ const homeSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(listMoviePagination.pending, (state) => {
-      state.isLoading = true;
-    }).addCase(listMoviePagination.fulfilled, (state, {payload}) => {
+    builder
+      .addCase(listMoviePagination.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(listMoviePagination.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.movies = payload;
       })
       .addCase(listMoviePagination.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
-    })
+      });
   },
 });
 
