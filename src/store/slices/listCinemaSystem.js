@@ -8,7 +8,6 @@ export const listCinemaSystemApi = createAsyncThunk(
         const response = await fetcher.get(
           `/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`
         );
-        console.log("jkhdf", response.data.content);
         
         return response.data.content;
       } catch (error) {

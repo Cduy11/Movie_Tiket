@@ -20,6 +20,8 @@ import { listMoviePagination } from "../../../store/slices/homeSlice";
 import useTabPanel from "../../../hooks/useTabPanel";
 import { listCinemaComplexApi } from "../../../store/slices/listCinemaSlice";
 import { listCinemaSystemApi } from "../../../store/slices/listCinemaSystem";
+import Loading from "../../../components/Login/Loading";
+import { listShowTimeMovieApi } from "../../../store/slices/listShowTimeMovie";
 
 export default function HomePage() {
   const { TabPanel, a11yProps } = useTabPanel();
@@ -33,22 +35,25 @@ export default function HomePage() {
 
   // lấy dữ liệu rạp phim
   const cinemaData = useSelector((state) => state.listCinema?.listCinema || []);
-  const cinema = useSelector(
-    (state) => state.cinemaSystem?.cinemaSystem || []
-  );
+  const cinema = useSelector((state) => state.cinemaSystem?.cinemaSystem || []);
+  const movieTime = useSelector((state) => state.movieTime?.movieTime || []);
 
   const [page, setPage] = useState(1);
   const [group] = useState("GP01");
   const [pageSize] = useState(8);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [value, setValue] = useState(0);
+  const [selectedCinema, setSelectedCinema] = useState(null);
 
   // Handle tabs change
   const handleChange = (event, newValue) => {
     setValue(newValue);
     const selectedCinema = cinemaData[newValue]?.maHeThongRap;
+
     if (selectedCinema) {
+      setSelectedCinema(selectedCinema);
       dispatch(listCinemaSystemApi({ maHeThongRap: selectedCinema }));
+      dispatch(listShowTimeMovieApi({ group, maHeThongRap: selectedCinema }));
     }
   };
 
@@ -56,12 +61,14 @@ export default function HomePage() {
     dispatch(listMoviePagination({ group, page, pageSize }));
     dispatch(listCinemaComplexApi());
     dispatch(listCinemaSystemApi({ maHeThongRap: "CGV" }));
+    dispatch(listShowTimeMovieApi({ group }));
   }, [dispatch, group, page, pageSize]);
 
   return (
     <>
       <Banner />
       <div className="movie-list"></div>
+      {/* search */}
       <div className="filter-container">
         <Select defaultValue="" displayEmpty className="filter-select">
           <MenuItem value="" disabled>
@@ -83,12 +90,11 @@ export default function HomePage() {
           MUA VÉ NGAY
         </Button>
       </div>
-
       {/* List Movies */}
       <div className="container">
         <div className="movies-container">
           {isLoading ? (
-            <div className="loading">Đang tải dữ liệu...</div>
+            <Loading />
           ) : (
             <Grid container>
               {movies.map((movie, index) => (
@@ -108,8 +114,14 @@ export default function HomePage() {
                     <div className="movie-content">
                       <CardContent>
                         {hoveredIndex === index ? (
-                          <Button variant="contained" className="buy-ticket-button">
-                            <span className="buy-ticket-title"> MUA VÉ NGAY</span>
+                          <Button
+                            variant="contained"
+                            className="buy-ticket-button"
+                          >
+                            <span className="buy-ticket-title">
+                              {" "}
+                              MUA VÉ NGAY
+                            </span>
                           </Button>
                         ) : (
                           <>
@@ -185,13 +197,12 @@ export default function HomePage() {
                   <Tab
                     key={index}
                     label={
-                      <div style={{ display: "flex", alignItems: "center" }}>
+                      <div style={{ display: "flex", alignItems: "center" }} onClick={() => handleChange(null, index)}>
                         <img
                           src={cinema.logo}
                           alt={cinema.tenHeThongRap}
                           style={{ width: "50px", marginRight: "8px" }}
                         />
-                        {cinema.tenHeThongRap}
                       </div>
                     }
                     {...a11yProps(index)}
@@ -200,17 +211,53 @@ export default function HomePage() {
               </Tabs>
 
               {/* Cinema Information for each system */}
-              <div style={{ padding: "16px", maxHeight: "400px", overflowY: "auto", maxWidth:"300px"}}>
-              {cinema.map((cinemas, index) => (
-                   <div key={index}>
-                     <Typography variant="h6">{cinemas.maCumRap}</Typography>
-                     <Typography variant="body2">
-                       {cinemas.tenCumRap}
-                     </Typography>
-                     <Typography variant="body2">{cinemas.diaChi}</Typography>
-                   </div>
-                 ))}
+              <div
+                className="cinema-info"
+                style={{
+                  padding: "16px",
+                  maxHeight: "400px",
+                  overflowY: "auto",
+                  maxWidth: "300px",
+                }}
+              >
+                {cinema.map((cinemas, index) => (
+              <div key={index} className="cinema-card">
+                    <Typography variant="body2" className="cinema-name">
+                      {cinemas.tenCumRap}
+                    </Typography>
+                    <Typography variant="body2" className="cinema-address">
+                      {cinemas.diaChi}
+                    </Typography>
+                  </div>
+                ))}
               </div>
+
+              {/* <div className="showtime-info">
+                {movieTime.map((cinemaSystem, index) =>
+                  cinemaSystem.lstCumRap.map((cinemaHall) =>
+                    cinemaHall.danhSachPhim.map((movie, movieIndex) => (
+                      <div key={movieIndex} className="movie_item_cinema">
+                        <img
+                          src={movie.hinhAnh}
+                          alt={movie.tenPhim}
+                          className="movie_image_cinema"
+                        />
+                        <Typography className="movie_title_cinema">
+                          {movie.tenPhim}
+                        </Typography>
+                        {movie.lstLichChieuTheoPhim.map((info, infoIndex) => (
+                          <Typography
+                            key={infoIndex}
+                            className="showtime_cinema"
+                          >
+                            {info.ngayChieuGioChieu}
+                          </Typography>
+                        ))}
+                      </div>
+                    ))
+                  )
+                )}
+              </div> */}
             </Box>
           </div>
         </div>

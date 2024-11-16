@@ -98,7 +98,7 @@ button.buy-ticket-button:hover {
   margin: 0 15px;
 }
 
-/* cụm rapk */
+/* cụm rap */
 
 .cumRap {
   background: url("/src/assets/img/back-news.b9861f84.png");
@@ -111,26 +111,70 @@ button.buy-ticket-button:hover {
 }
 
 .cinema-card {
-  background-color: #f9f9f9; /* Màu nền cho card */
-  border: 1px solid #e0e0e0; /* Đường viền */
-  border-radius: 8px; /* Bo góc */
-  padding: 16px; /* Khoảng cách bên trong */
-  margin-bottom: 16px; /* Khoảng cách giữa các card */
-  display: flex; /* Để căn chỉnh nội dung */
-  align-items: center; /* Căn giữa theo chiều dọc */
+  background-color: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  align-items: center;
+  transition: box-shadow 0.3s;
+}
+
+.cinema-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
 }
 
 .cinema-card img {
-  width: 50px; /* Kích thước logo */
-  margin-right: 8px; /* Khoảng cách giữa logo và tên rạp */
+  width: 50px;
+  margin-right: 8px;
+}
+.cinema-name {
+  color: green;
 }
 
-.cinema-card h6 {
-  font-weight: bold; /* Đậm cho tên rạp */
-  margin: 0; /* Bỏ khoảng cách mặc định */
+.cinema-address {
+  color: #adafaf;
 }
 
-.cinema-card p {
-  margin: 4px 0; /* Khoảng cách giữa các đoạn văn */
-  color: #555; /* Màu chữ cho địa chỉ */
+.showtime-info {
+  padding: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  max-width: 415px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+}
+
+.movie_item_cinema {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.movie_item_cinema:hover {
+  background-color: #f0f0f0;
+}
+
+.movie_image_cinema {
+  width: 80px;
+}
+
+.movie_title_cinema {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.showtime_cinema {
+  color: #020202;
+  font-size: 12px;
+  margin-top: 2px;
+  padding: 10px;
+  align-self: flex-start;
+  margin-left: 105px;
+  margin-top: -100px;
 }

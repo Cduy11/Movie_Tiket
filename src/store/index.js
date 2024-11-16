@@ -3,6 +3,7 @@ import bannerSlice from "./slices/bannerSlice";
 import homeSlice from "./slices/homeSlice";
 import listCinemaSlice  from "./slices/listCinemaSlice";
 import listCinemaSystemSlice from "./slices/listCinemaSystem"
+import listShowTimeMovie from "./slices/listShowTimeMovie";
 // Tạo store
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     home: homeSlice,
     listCinema: listCinemaSlice,
     cinemaSystem : listCinemaSystemSlice,
+    movieTime : listShowTimeMovie,
   },
 });
 
