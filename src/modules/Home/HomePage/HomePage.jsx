@@ -13,56 +13,57 @@ import {
   Tab,
 } from "@mui/material";
 import Banner from "../../../components/Banner/Banner";
-import "./HomePage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+
 import { listMoviePagination } from "../../../store/slices/homeSlice";
+import { listCinemaComplexApi } from "../../../store/slices/cinemaSlice";
+
+import useCinemaData from "../../../hooks/useCinemaData"; 
 import useTabPanel from "../../../hooks/useTabPanel";
-import { listCinemaComplexApi } from "../../../store/slices/listCinemaSlice";
-import { listCinemaSystemApi } from "../../../store/slices/listCinemaSystem";
-import Loading from "../../../components/Login/Loading";
-import { listShowTimeMovieApi } from "../../../store/slices/listShowTimeMovie";
+
+import Loading from "../../../components/Loading/Loading";
+import "./HomePage.css";
 
 export default function HomePage() {
-  const { TabPanel, a11yProps } = useTabPanel();
   const dispatch = useDispatch();
-  const {
-    movies: movieList,
-    isLoading,
-    error,
-  } = useSelector((state) => state.home);
-  const movies = movieList?.items || [];
 
-  // lấy dữ liệu rạp phim
-  const cinemaData = useSelector((state) => state.listCinema?.listCinema || []);
-  const cinema = useSelector((state) => state.cinemaSystem?.cinemaSystem || []);
-  const movieTime = useSelector((state) => state.movieTime?.movieTime || []);
+  // custom hook
+  const { TabPanel, a11yProps } = useTabPanel();
+  const {
+    cinemaData,
+    cinema,
+    movieTime,
+    selectedCinema,
+    setSelectedCinema,
+    selectedCinemaId,
+    setSelectedCinemaId,
+  } = useCinemaData();
 
   const [page, setPage] = useState(1);
+  const { movies: movieList, isLoading } = useSelector((state) => state.home);
+  const movies = movieList?.items || [];
+
   const [group] = useState("GP01");
   const [pageSize] = useState(8);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [value, setValue] = useState(0);
-  const [selectedCinema, setSelectedCinema] = useState(null);
 
-  // Handle tabs change
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    const selectedCinema = cinemaData[newValue]?.maHeThongRap;
-
-    if (selectedCinema) {
-      setSelectedCinema(selectedCinema);
-      dispatch(listCinemaSystemApi({ maHeThongRap: selectedCinema }));
-      dispatch(listShowTimeMovieApi({ group, maHeThongRap: selectedCinema }));
-    }
-  };
-
+  // Fetch dữ liệu phim và rạp phim
   useEffect(() => {
     dispatch(listMoviePagination({ group, page, pageSize }));
     dispatch(listCinemaComplexApi());
-    dispatch(listCinemaSystemApi({ maHeThongRap: "CGV" }));
-    dispatch(listShowTimeMovieApi({ group }));
   }, [dispatch, group, page, pageSize]);
+
+  // Xử lý thay đổi tab (chọn hệ thống rạp phim)
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    const selectedCinemaId = cinemaData[newValue]?.maHeThongRap;
+
+    if (selectedCinemaId) {
+      setSelectedCinema(selectedCinemaId);
+    }
+  };
 
   return (
     <>
@@ -120,7 +121,7 @@ export default function HomePage() {
                           >
                             <span className="buy-ticket-title">
                               {" "}
-                              MUA VÉ NGAY
+                              MUA VÉ NGAY{" "}
                             </span>
                           </Button>
                         ) : (
@@ -197,20 +198,20 @@ export default function HomePage() {
                   <Tab
                     key={index}
                     label={
-                      <div style={{ display: "flex", alignItems: "center" }} onClick={() => handleChange(null, index)}>
+                      <div style={{ display: "flex", alignItems: "center" }}>
                         <img
                           src={cinema.logo}
                           alt={cinema.tenHeThongRap}
                           style={{ width: "50px", marginRight: "8px" }}
                         />
+                        {cinema.tenHeThongRap}
                       </div>
                     }
-                    {...a11yProps(index)}
                   />
                 ))}
               </Tabs>
 
-              {/* Cinema Information for each system */}
+              {/* Cinema Information */}
               <div
                 className="cinema-info"
                 style={{
@@ -221,7 +222,11 @@ export default function HomePage() {
                 }}
               >
                 {cinema.map((cinemas, index) => (
-              <div key={index} className="cinema-card">
+                  <div
+                    key={index}
+                    className="cinema-card"
+                    onClick={() => setSelectedCinemaId(cinemas.maCumRap)} // Handle click to select cinema
+                  >
                     <Typography variant="body2" className="cinema-name">
                       {cinemas.tenCumRap}
                     </Typography>
@@ -232,32 +237,45 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {/* <div className="showtime-info">
-                {movieTime.map((cinemaSystem, index) =>
-                  cinemaSystem.lstCumRap.map((cinemaHall) =>
-                    cinemaHall.danhSachPhim.map((movie, movieIndex) => (
-                      <div key={movieIndex} className="movie_item_cinema">
-                        <img
-                          src={movie.hinhAnh}
-                          alt={movie.tenPhim}
-                          className="movie_image_cinema"
-                        />
-                        <Typography className="movie_title_cinema">
-                          {movie.tenPhim}
-                        </Typography>
-                        {movie.lstLichChieuTheoPhim.map((info, infoIndex) => (
-                          <Typography
-                            key={infoIndex}
-                            className="showtime_cinema"
-                          >
-                            {info.ngayChieuGioChieu}
-                          </Typography>
-                        ))}
-                      </div>
-                    ))
+              {/* Showtimes */}
+              <div className="showtime-info">
+                {movieTime
+                  .filter(
+                    (cinemaSystem) =>
+                      cinemaSystem.maHeThongRap === selectedCinema
                   )
-                )}
-              </div> */}
+                  .map((cinemaSystem, index) =>
+                    cinemaSystem.lstCumRap.map((cinemaHall) =>
+                      cinemaHall.danhSachPhim.map((movie, movieIndex) => {
+                        // Only display showtimes for the selected cinema
+                        if (cinemaHall.maCumRap === selectedCinemaId) {
+                          return (
+                            <div key={movieIndex} className="movie_item_cinema">
+                              <img
+                                src={movie.hinhAnh}
+                                alt={movie.tenPhim}
+                                className="movie_image_cinema"
+                              />
+                              <Typography className="movie_title_cinema">
+                                {movie.tenPhim}
+                              </Typography>
+                              {movie.lstLichChieuTheoPhim.map(
+                                (info, infoIndex) => (
+                                  <Typography
+                                    key={infoIndex}
+                                    className="showtime_cinema"
+                                  >
+                                    {info.ngayChieuGioChieu}
+                                  </Typography>
+                                )
+                              )}
+                            </div>
+                          );
+                        }
+                      })
+                    )
+                  )}
+              </div>
             </Box>
           </div>
         </div>
