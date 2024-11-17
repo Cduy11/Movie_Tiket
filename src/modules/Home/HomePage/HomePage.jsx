@@ -15,11 +15,13 @@ import {
 import Banner from "../../../components/Banner/Banner";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
+import { vi } from "date-fns/locale";
 
 import { listMoviePagination } from "../../../store/slices/homeSlice";
 import { listCinemaComplexApi } from "../../../store/slices/cinemaSlice";
 
-import useCinemaData from "../../../hooks/useCinemaData"; 
+import useCinemaData from "../../../hooks/useCinemaData";
 import useTabPanel from "../../../hooks/useTabPanel";
 
 import Loading from "../../../components/Loading/Loading";
@@ -244,10 +246,9 @@ export default function HomePage() {
                     (cinemaSystem) =>
                       cinemaSystem.maHeThongRap === selectedCinema
                   )
-                  .map((cinemaSystem, index) =>
+                  .map((cinemaSystem) =>
                     cinemaSystem.lstCumRap.map((cinemaHall) =>
                       cinemaHall.danhSachPhim.map((movie, movieIndex) => {
-                        // Only display showtimes for the selected cinema
                         if (cinemaHall.maCumRap === selectedCinemaId) {
                           return (
                             <div key={movieIndex} className="movie_item_cinema">
@@ -256,19 +257,63 @@ export default function HomePage() {
                                 alt={movie.tenPhim}
                                 className="movie_image_cinema"
                               />
-                              <Typography className="movie_title_cinema">
-                                {movie.tenPhim}
-                              </Typography>
-                              {movie.lstLichChieuTheoPhim.map(
-                                (info, infoIndex) => (
-                                  <Typography
-                                    key={infoIndex}
-                                    className="showtime_cinema"
-                                  >
-                                    {info.ngayChieuGioChieu}
-                                  </Typography>
-                                )
-                              )}
+                              <div className="movie_details">
+                                <Typography className="movie_title_cinema">
+                                  {movie.tenPhim}
+                                </Typography>
+                                <div className="showtime-buttons">
+                                  <div className="showtime-column">
+                                    {movie.lstLichChieuTheoPhim
+                                      .slice(0, 2)
+                                      .map((info, infoIndex) => (
+                                        <Button
+                                          key={infoIndex}
+                                          className="showtime_cinema"
+                                        >
+                                          <span style={{ color: "green" }}>
+                                            {format(
+                                              new Date(info.ngayChieuGioChieu),
+                                              "dd/MM/yyyy",
+                                              { locale: vi }
+                                            )}
+                                          </span>
+                                          <span style={{ color: "red", marginLeft: "10px" }}>
+                                            {format(
+                                              new Date(info.ngayChieuGioChieu),
+                                              "HH:mm",
+                                              { locale: vi }
+                                            )}
+                                          </span>
+                                        </Button>
+                                      ))}
+                                  </div>
+                                  <div className="showtime-column">
+                                    {movie.lstLichChieuTheoPhim
+                                      .slice(2, 4)
+                                      .map((info, infoIndex) => (
+                                        <Button
+                                          key={infoIndex}
+                                          className="showtime_cinema"
+                                        >
+                                          <span style={{ color: "green" }}>
+                                            {format(
+                                              new Date(info.ngayChieuGioChieu),
+                                              "dd/MM/yyyy",
+                                              { locale: vi }
+                                            )}
+                                          </span>
+                                          <span style={{ color: "red", marginLeft: "10px" }}>
+                                            {format(
+                                              new Date(info.ngayChieuGioChieu),
+                                              "HH:mm",
+                                              { locale: vi }
+                                            )}
+                                          </span>
+                                        </Button>
+                                      ))}
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           );
                         }
