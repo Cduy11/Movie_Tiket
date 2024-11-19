@@ -325,6 +325,22 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* app  */}
+      <div className="app-container">
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6} className="flex justify-center items-center app-content">
+            <div className="text-center">
+              <h2 className="app-title">Ứng dụng tiện lợi dành cho người yêu điện ảnh</h2>
+              <p className="app-description">Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp và đổi quà hấp dẫn.</p>
+              <button className="app-button">APP MIỄN PHÍ - TẢI VỀ NGAY!</button>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={6} className="flex justify-center items-center app-content">
+            <img  src="/src/assets/img/tải xuống.png" alt="App Preview" className="w-full h-auto app-img" />
+          </Grid>
+        </Grid>
+      </div>
     </>
   );
 }
