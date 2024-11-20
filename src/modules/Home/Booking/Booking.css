@@ -1,0 +1,121 @@
+.container {
+  background: none;
+  height: 100vh;
+}
+.booking-wrapper {
+  display: flex;
+  color: black;
+}
+
+.image-container {
+  border: 2px solid white;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  flex-basis: 25%;
+}
+
+.booking-info {
+  color: rgb(255, 255, 255);
+  margin-right: 40%;
+  margin-top: 40px;
+  flex-basis: 50%;
+  padding-left: 33px;
+}
+
+button.booking-btn {
+  margin-top: 10px;
+  background-color: #ff4500;
+  color: white;
+}
+
+.booking-review {
+  flex-basis: 25%;
+  color: rgb(238, 238, 238);
+  margin-top: 40px;
+  border: 4px solid rgb(26, 252, 18);
+  border-radius: 50%;
+  background: black;
+  flex-direction: column;
+  height:100px;
+  width: 30px;
+}
+
+.booking-review-title {
+    margin-top: 7px !important;
+    font-size: 50px !important;
+    margin-left: 34px !important;
+    font-weight: 700;
+}
+
+
+/* Container chính của booking cinema */
+.booking-cinema-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+  
+  /* Tabs danh sách rạp */
+  .booking-tabs {
+    min-width: 200px;
+    border-right: 1px solid var(--divider-color);
+  }
+  
+  /* Mỗi tab đại diện một rạp */
+  .booking-tab {
+    font-size: 16px;
+    text-align: left;
+    padding: 12px;
+    color: var(--text-primary);
+  }
+  
+  /* Vùng hiển thị chi tiết rạp */
+  .booking-details {
+    flex: 1;
+    padding-left: 16px;
+  }
+  
+  /* Card chứa thông tin rạp và suất chiếu */
+  .booking-card {
+    background-color: var(--gray-800);
+    margin-top: 16px;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  
+  /* Tên cụm rạp */
+  .booking-cinema-name {
+    font-weight: bold;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  
+  /* Vùng chứa các suất chiếu */
+  .booking-showtimes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  /* Nút đại diện cho mỗi suất chiếu */
+  .booking-showtime {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  /* Suất chiếu khả dụng */
+  .booking-showtime-available {
+    background-color: var(--green-500);
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Suất chiếu đã bán hết */
+  .booking-showtime-soldout {
+    background-color: var(--red-500);
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }

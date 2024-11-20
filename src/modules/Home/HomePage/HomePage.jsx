@@ -28,6 +28,8 @@ import Loading from "../../../components/Loading/Loading";
 import "./HomePage.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
+import { Link } from "react-router-dom";
+import { PATH } from "../../../routes/path";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -123,10 +125,12 @@ export default function HomePage() {
                             variant="contained"
                             className="buy-ticket-button"
                           >
-                            <span className="buy-ticket-title">
-                              {" "}
-                              MUA VÉ NGAY{" "}
-                            </span>
+                            <Link to={PATH.Booking}>
+                              <span className="buy-ticket-title">
+                                {" "}
+                                MUA VÉ NGAY{" "}
+                              </span>
+                            </Link>
                           </Button>
                         ) : (
                           <>
@@ -181,7 +185,7 @@ export default function HomePage() {
       <div className="container">
         <div className="cumRap">
           <div className="p-4">
-            <Box
+           <Box
               sx={{
                 flexGrow: 1,
                 bgcolor: "background.paper",
@@ -192,7 +196,7 @@ export default function HomePage() {
               {/* Tabs for Cinema Systems */}
               <Tabs
                 orientation="vertical"
-                variant="scrollable"
+                variant="scr ollable"
                 value={value}
                 onChange={handleChange}
                 aria-label="Danh sách hệ thống rạp"
@@ -229,7 +233,7 @@ export default function HomePage() {
                   <div
                     key={index}
                     className="cinema-card"
-                    onClick={() => setSelectedCinemaId(cinemas.maCumRap)} // Handle click to select cinema
+                    onClick={() => setSelectedCinemaId(cinemas.maCumRap)} 
                   >
                     <Typography variant="body2" className="cinema-name">
                       {cinemas.tenCumRap}

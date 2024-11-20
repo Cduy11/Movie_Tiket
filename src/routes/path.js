@@ -7,6 +7,6 @@ export const PATH = {
 
     // HOME
     Home: "/",
-
+    Booking: `/booking/:maPhim`,
     // Admin
 }

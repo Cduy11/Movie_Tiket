@@ -5,6 +5,7 @@ import AuthLayout from "../layouts/AuthLayout/AuthLayout";
 import Register from "../modules/Auth/Register/Register";
 import MainLayout from "../layouts/MainLayout/MainLayout";
 import HomePage from "../modules/Home/HomePage/HomePage";
+import Booking from "../modules/Home/Booking/Booking";
 
 
 export default function useRouterElements() {
@@ -33,6 +34,10 @@ export default function useRouterElements() {
         {
           index: true,
           element: <HomePage />,
+        },
+        {
+          path: PATH.Booking,
+          element: <Booking />,
         },
       ],
     },
