@@ -26,6 +26,8 @@ import useTabPanel from "../../../hooks/useTabPanel";
 
 import Loading from "../../../components/Loading/Loading";
 import "./HomePage.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -277,7 +279,12 @@ export default function HomePage() {
                                               { locale: vi }
                                             )}
                                           </span>
-                                          <span style={{ color: "red", marginLeft: "10px" }}>
+                                          <span
+                                            style={{
+                                              color: "red",
+                                              marginLeft: "10px",
+                                            }}
+                                          >
                                             {format(
                                               new Date(info.ngayChieuGioChieu),
                                               "HH:mm",
@@ -302,7 +309,12 @@ export default function HomePage() {
                                               { locale: vi }
                                             )}
                                           </span>
-                                          <span style={{ color: "red", marginLeft: "10px" }}>
+                                          <span
+                                            style={{
+                                              color: "red",
+                                              marginLeft: "10px",
+                                            }}
+                                          >
                                             {format(
                                               new Date(info.ngayChieuGioChieu),
                                               "HH:mm",
@@ -329,15 +341,81 @@ export default function HomePage() {
       {/* app  */}
       <div className="app-container">
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6} className="flex justify-center items-center app-content">
+          <Grid
+            item
+            xs={12}
+            md={6}
+            className="flex justify-center items-center app-content"
+          >
             <div className="text-center">
-              <h2 className="app-title">Ứng dụng tiện lợi dành cho người yêu điện ảnh</h2>
-              <p className="app-description">Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp và đổi quà hấp dẫn.</p>
-              <button className="app-button">APP MIỄN PHÍ - TẢI VỀ NGAY!</button>
+              <h2 className="app-title">
+                Ứng dụng tiện lợi <br /> dành cho người yêu điện ảnh
+              </h2>
+              <p className="app-description">
+                Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp
+                và đổi quà hấp dẫn.
+              </p>
+              <a
+                href="https://apps.apple.com/us/app/123phim-mua-ve-lien-tay-chon/id615186197"
+                className="app-button"
+              >
+                APP MIỄN PHÍ - TẢI VỀ NGAY!
+              </a>
+              <p>
+                TIX có hai phiên bản{" "}
+                <a href="https://apps.apple.com/us/app/123phim-mua-ve-lien-tay-chon/id615186197">
+                  {" "}
+                  IOS
+                </a>{" "}
+                &{" "}
+                <a href="https://play.google.com/store/apps/details?id=vn.com.vng.phim123">
+                  {" "}
+                  ANDROID
+                </a>
+              </p>
             </div>
           </Grid>
-          <Grid item xs={12} md={6} className="flex justify-center items-center app-content">
-            <img  src="/src/assets/img/tải xuống.png" alt="App Preview" className="w-full h-auto app-img" />
+          <Grid
+            item
+            xs={12}
+            md={6}
+            className="flex justify-center items-center app-content"
+          >
+            <img
+              src="/src/assets/img/tải xuống.png"
+              alt="App Preview"
+              className="w-full h-auto app-img"
+            />
+            <Grid
+              item
+              xs={12}
+              md={6}
+              className="flex justify-center items-center app-content"
+            >
+              <Swiper
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                loop={true}
+                pagination={{ clickable: true }}
+              >
+                <SwiperSlide>
+                  <img
+                    src="/src/assets/img/banner-slider-6.0b2b382d.jpg"
+                    alt="App Preview"
+                    className="w-full h-auto app-img-carousel"
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img
+                    src="/src/assets/img/banner-slider-3.33a486d1.jpg"
+                    alt="App Preview"
+                    className="w-full h-auto app-img-carousel"
+                  />
+                </SwiperSlide>
+              </Swiper>
+            </Grid>
           </Grid>
         </Grid>
       </div>

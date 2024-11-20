@@ -219,36 +219,68 @@ button.showtime_cinema {
 
 .app-container {
   background: url("/src/assets/img/backapp.b46ef3a1.jpg");
-  padding: 120px 0 80px 0;
+  padding: 120 0 80px 0;
   background-size: contain;
   z-index: 1;
 }
 
 .app-title {
-  text-align: center;
   font-size: 2rem;
   font-weight: bold;
+  color: #ff6f61;
 }
 
 .app-description {
-  margin-top: 1rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #555;
 }
 
 .app-button {
-  margin-top: 1rem;
-  background-color: #d32f2e;
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #ff6f61;
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  
+}
+
+.app-button:hover {
+  background-color: #e6554f;
 }
 
 .app-content {
   background: none;
+  position: relative;
+  padding: 16px;
 }
 
 .app-img {
   display: block;
-    width: 250px;
-    overflow: hidden;
-    height: 500px;
+  width: 250px;
+  overflow: hidden;
+  height: 500px;
+  position: absolute;
+  z-index: 1; 
+}
+
+.app-img-carousel {
+  position: relative;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+ padding: 91px 120px;
+  display: block;
+  border-radius: 50px;
+  height: 638px;
+  border-radius: 27%;
 }
