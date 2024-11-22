@@ -29,13 +29,15 @@ import "./HomePage.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PATH } from "../../../routes/path";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // custom hook
-  const { TabPanel, a11yProps } = useTabPanel();
+  useTabPanel();
   const {
     cinemaData,
     cinema,
@@ -71,6 +73,11 @@ export default function HomePage() {
     }
   };
 
+  const handleBuyTicket = (maPhim) => {
+    navigate(`/booking/${maPhim}`);
+  };
+
+
   return (
     <>
       <Banner />
@@ -94,7 +101,7 @@ export default function HomePage() {
           </MenuItem>
         </Select>
         <Button variant="contained" className="buy-ticket-button">
-          MUA VÉ NGAY
+          <Link to={PATH.BookingSeat}>MUA VÉ NGAY</Link>
         </Button>
       </div>
       {/* List Movies */}
@@ -121,17 +128,16 @@ export default function HomePage() {
                     <div className="movie-content">
                       <CardContent>
                         {hoveredIndex === index ? (
-                          <Button
-                            variant="contained"
-                            className="buy-ticket-button"
-                          >
-                            <Link to={PATH.Booking}>
-                              <span className="buy-ticket-title">
-                                {" "}
-                                MUA VÉ NGAY{" "}
-                              </span>
-                            </Link>
-                          </Button>
+                               <Button
+                               variant="contained"
+                               className="buy-ticket-button"
+                               onClick={() => handleBuyTicket(movie.maPhim)}
+                             >
+                               <span className="buy-ticket-title">
+                                 {" "}
+                                 MUA VÉ NGAY{" "}
+                               </span>
+                             </Button>
                         ) : (
                           <>
                             <Typography
@@ -272,39 +278,40 @@ export default function HomePage() {
                                     {movie.lstLichChieuTheoPhim
                                       .slice(0, 2)
                                       .map((info, infoIndex) => (
-                                        <Button
-                                          key={infoIndex}
-                                          className="showtime_cinema"
-                                        >
-                                          <span style={{ color: "green" }}>
-                                            {format(
-                                              new Date(info.ngayChieuGioChieu),
-                                              "dd/MM/yyyy",
-                                              { locale: vi }
-                                            )}
-                                          </span>
-                                          <span
-                                            style={{
-                                              color: "red",
-                                              marginLeft: "10px",
-                                            }}
-                                          >
-                                            {format(
-                                              new Date(info.ngayChieuGioChieu),
-                                              "HH:mm",
-                                              { locale: vi }
-                                            )}
-                                          </span>
-                                        </Button>
+                                        <Link to={PATH.BookingSeat} key={infoIndex}>
+                                          <Button className="showtime_cinema">
+                                            <span style={{ color: "green" }}>
+                                              {format(
+                                                new Date(info.ngayChieuGioChieu),
+                                                "dd/MM/yyyy",
+                                                { locale: vi }
+                                              )}
+                                            </span>
+                                            <span
+                                              style={{
+                                                color: "red",
+                                                marginLeft: "10px",
+                                              }}
+                                            >
+                                              {format(
+                                                new Date(info.ngayChieuGioChieu),
+                                                "HH:mm",
+                                                { locale: vi }
+                                              )}
+                                            </span>
+                                          </Button>
+                                        </Link>
                                       ))}
                                   </div>
                                   <div className="showtime-column">
                                     {movie.lstLichChieuTheoPhim
                                       .slice(2, 4)
                                       .map((info, infoIndex) => (
-                                        <Button
+                                        <Link to={PATH.BookingSeat} key={infoIndex}>
+                                          <Button
                                           key={infoIndex}
                                           className="showtime_cinema"
+                                          
                                         >
                                           <span style={{ color: "green" }}>
                                             {format(
@@ -326,6 +333,7 @@ export default function HomePage() {
                                             )}
                                           </span>
                                         </Button>
+                                        </Link>
                                       ))}
                                   </div>
                                 </div>

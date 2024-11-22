@@ -8,5 +8,6 @@ export const PATH = {
     // HOME
     Home: "/",
     Booking: `/booking/:maPhim`,
+    BookingSeat: `/booking-seat/:maPhim`,
     // Admin
 }

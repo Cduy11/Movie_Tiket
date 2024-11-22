@@ -1,6 +1,5 @@
 .container {
   background: none;
-  height: 100vh;
 }
 .booking-wrapper {
   display: flex;
@@ -37,85 +36,69 @@ button.booking-btn {
   border-radius: 50%;
   background: black;
   flex-direction: column;
-  height:100px;
+  height: 100px;
   width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .booking-review-title {
-    margin-top: 7px !important;
-    font-size: 50px !important;
-    margin-left: 34px !important;
-    font-weight: 700;
+  margin-top: 7px !important;
+  font-size: 50px !important;
+  font-weight: 700;
 }
-
 
 /* Container chính của booking cinema */
 .booking-cinema-container {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-  }
-  
-  /* Tabs danh sách rạp */
-  .booking-tabs {
-    min-width: 200px;
-    border-right: 1px solid var(--divider-color);
-  }
-  
-  /* Mỗi tab đại diện một rạp */
-  .booking-tab {
-    font-size: 16px;
-    text-align: left;
-    padding: 12px;
-    color: var(--text-primary);
-  }
-  
-  /* Vùng hiển thị chi tiết rạp */
-  .booking-details {
-    flex: 1;
-    padding-left: 16px;
-  }
-  
-  /* Card chứa thông tin rạp và suất chiếu */
-  .booking-card {
-    background-color: var(--gray-800);
-    margin-top: 16px;
-    border-radius: 8px;
-    padding: 16px;
-  }
-  
-  /* Tên cụm rạp */
-  .booking-cinema-name {
-    font-weight: bold;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-  }
-  
-  /* Vùng chứa các suất chiếu */
-  .booking-showtimes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  /* Nút đại diện cho mỗi suất chiếu */
-  .booking-showtime {
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-  }
-  
-  /* Suất chiếu khả dụng */
-  .booking-showtime-available {
-    background-color: var(--green-500);
-    color: white;
-    cursor: pointer;
-  }
-  
-  /* Suất chiếu đã bán hết */
-  .booking-showtime-soldout {
-    background-color: var(--red-500);
-    color: white;
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+/* Tabs danh sách rạp */
+.booking-tabs {
+  min-width: 200px;
+  border-right: 1px solid var(--divider-color);
+}
+
+/* Mỗi tab đại diện một rạp */
+.booking-tab {
+  font-size: 16px;
+  text-align: left;
+  padding: 12px;
+  color: var(--text-primary);
+}
+
+/* Vùng hiển thị chi tiết rạp */
+.booking-details {
+  flex: 1;
+  padding-left: 16px;
+}
+
+.cinema-schedule {
+  width: 100%;
+  height: auto;
+}
+.cinema-card-booking {
+  background: none !important;
+  color: white !important;
+}
+
+.cinema-name-booking {
+  color: white !important;
+  font-weight: 700;
+}
+
+button.showtime {
+  border: 1px solid white;
+  margin: 10px 10px;
+  background: #ff4500 !important;
+  height: 40px;
+  width: 35%;
+}
+
+button.showtime:hover {
+  background: #ff4500 !important;
+  color: white;
+}

@@ -45,12 +45,29 @@ export const listShowTimeMovieApi = createAsyncThunk(
   }
 );
 
+// call api lấy thông tin lịch chiếu phim theo hệ thống rạp
+export const getShowTimeMovieSystemApi = createAsyncThunk(
+  "cinema/getShowTimeMovieSystemApi",
+  async ({ maPhim }) => {
+    try {
+      const response = await fetcher.get(
+        `/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`
+      );
+      return response.data.content;
+    } catch (error) {
+      throw error.response ? error.response.data.message : error.message;
+    }
+  }
+);
+
+
 const cinemaSlice = createSlice({
   name: "cinema",
   initialState: {
     listCinema: [],
     cinemaSystem: [],
     movieTime: [],
+    showTimeMovieSystem: [],
     isLoading: false,
     error: null,
   },
@@ -90,6 +107,18 @@ const cinemaSlice = createSlice({
         state.movieTime = payload;
       })
       .addCase(listShowTimeMovieApi.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getShowTimeMovieSystemApi.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getShowTimeMovieSystemApi.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.showTimeMovieSystem = payload;
+      })
+      .addCase(getShowTimeMovieSystemApi.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
