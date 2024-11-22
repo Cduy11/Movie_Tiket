@@ -6,6 +6,7 @@ import Register from "../modules/Auth/Register/Register";
 import MainLayout from "../layouts/MainLayout/MainLayout";
 import HomePage from "../modules/Home/HomePage/HomePage";
 import Booking from "../modules/Home/Booking/Booking";
+import BookingSeat from "../modules/Home/BookingSeat/BookingSeat";
 // import BookingSeat from "../modules/Home/BookingSeat/BookingSeat";
 
 
@@ -40,10 +41,10 @@ export default function useRouterElements() {
           path: PATH.Booking,
           element: <Booking />,
         },
-        // {
-        //   path: PATH.BookingSeat,
-        //   element: <BookingSeat />,
-        // }
+        {
+          path: PATH.BookingSeat,
+          element: <BookingSeat />,
+        }
       ],
     },
   ]);

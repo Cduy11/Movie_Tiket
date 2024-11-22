@@ -1,0 +1,133 @@
+.booking-seat {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .booking-seat-container {
+    width: 80%;
+    max-width: 1200px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .booking-seat-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .seat-grid {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  .seat {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .booked {
+    background-color: red;
+    color: white;
+  }
+  
+  .normal {
+    background-color: gray;
+  }
+  
+  .vip {
+    background-color: gold;
+  }
+  
+  .legend {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+  
+  .legend-item .seat {
+    margin-right: 5px;
+  }
+
+
+  .booking-info-title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 30px;  
+    color: #c0e19a;
+    font-weight: bold;
+   
+  }
+  
+  .booking-info-container {
+    width: 100%;
+    box-shadow: 0 0 5px grey;
+    background-color: #fff;
+  
+  }
+  
+  .info-item {
+    margin-bottom: 5px;
+    color: #666;
+    line-height: 3.5;
+    margin-left: 20px;
+  }
+
+  .info-item-value {
+    color: #419065;
+    margin-left: 10px ;
+    font-weight: 500;
+  }
+  
+  .book-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+  }
+
+  .book-button:hover {
+    background-color: #e63900;
+  }
+  
+  .seat.booked {
+    background-color: red;
+    color: white;
+  }
+  
+  .seat.normal {
+    background-color: gray;
+  }
+  
+  .seat.vip {
+    background-color: gold;
+  }
+
+  .seat.selected {
+    background-color: green;
+    color: white;
+  }

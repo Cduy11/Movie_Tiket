@@ -2,7 +2,7 @@ import { Box, Button, Tab, Tabs, Typography, Card, CardContent } from "@mui/mate
 import "./Booking.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  useParams } from "react-router-dom";
+import {  Link, useParams } from "react-router-dom";
 import { getShowTimeMovieSystemApi } from "../../../store/slices/cinemaSlice";
 
 export default function Booking() {
@@ -12,7 +12,6 @@ export default function Booking() {
   // Lấy dữ liệu từ Redux
   const { showTimeMovieSystem } = useSelector((state) => state.cinema);
   const showCinema = showTimeMovieSystem?.heThongRapChieu || [];
-  console.log("showCinema:", showCinema);
 
   const [value, setValue] = useState(0);
   const [selectedCinema, setSelectedCinema] = useState(null);
@@ -29,7 +28,6 @@ export default function Booking() {
     setValue(newValue);
     const selected = showCinema[newValue];
     setSelectedCinema(selected);
-    console.log("Selected Cinema:", selected);
   };
 
   return (
@@ -128,9 +126,11 @@ export default function Booking() {
                           .slice(0, 4) 
                           .map((lichChieu, idx) => (
                             <Button key={idx} variant="body2" className="showtime">
-                              {` Giờ chiếu: ${new Date(
+                             <Link to={`/booking-seat/${lichChieu.maLichChieu}`}>
+                             {` Giờ chiếu: ${new Date(
                                 lichChieu.ngayChieuGioChieu
                               ).toLocaleString()}`}
+                             </Link>
                             </Button>
                           ))
                       ) : (

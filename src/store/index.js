@@ -9,7 +9,7 @@ export const store = configureStore({
     banner: bannerSlice,
     home: homeSlice,
     cinema: cinemaSlice,
-    booking: bookingSlice
+    bookingSeat: bookingSlice,
   },
 });
 
