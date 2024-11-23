@@ -6,7 +6,7 @@
         REGISTER: "/auth/register",
 
         // HOME
-        Home: "/",
+        HOME: "/",
         Booking: `/booking/:maPhim`,
         BookingSeat: `/booking-seat/:maLichChieu`,
         // Admin

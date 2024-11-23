@@ -4,10 +4,10 @@ import fetcher from "../../apis/fetcher";
 // Thunk để gọi API lấy dữ liệu ghế
 export const getBookingSeatApi = createAsyncThunk(
   "bookingSeat/getBookingSeatApi",
-  async () => {
+  async ({ maLichChieu }) => {
     try {
       const response = await fetcher.get(
-        `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=45913`
+        `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu}`
       );
       console.log("response:", response.data.content);
       return response.data.content;

@@ -278,7 +278,7 @@ export default function HomePage() {
                                     {movie.lstLichChieuTheoPhim
                                       .slice(0, 2)
                                       .map((info, infoIndex) => (
-                                        <Link to={PATH.BookingSeat} key={infoIndex}>
+                                        <Link to={`/booking-seat/${info.maLichChieu}`} key={infoIndex}>
                                           <Button className="showtime_cinema">
                                             <span style={{ color: "green" }}>
                                               {format(
@@ -307,7 +307,7 @@ export default function HomePage() {
                                     {movie.lstLichChieuTheoPhim
                                       .slice(2, 4)
                                       .map((info, infoIndex) => (
-                                        <Link to={PATH.BookingSeat} key={infoIndex}>
+                                        <Link to={`/booking-seat/${info.maLichChieu}`} key={infoIndex}>
                                           <Button
                                           key={infoIndex}
                                           className="showtime_cinema"
