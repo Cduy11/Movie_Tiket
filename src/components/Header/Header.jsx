@@ -19,10 +19,10 @@ function Header() {
 
         {/* Navigation Links */}
         <div className="flex space-x-6 header-nav">
-          <Button className="text-black"> <Link to={PATH.Home}>Lịch Chiếu</Link></Button>
-          <Button className="text-black"> Cụm Rạp</Button>
-          <Button className="text-black"> Tin Tức</Button>
-          <Button className="text-black"> Ứng Dụng</Button>
+          <Link to={PATH.HOME} className="text-black">Lịch Chiếu</Link>
+          <Link to={PATH.HOME} className="text-black"> Cụm Rạp</Link>
+          <Link to={PATH.HOME} className="text-black"> Tin Tức</Link>
+          <Link to={PATH.HOME} className="text-black"> Ứng Dụng</Link>
         </div>
 
         {/* Login and Register */}
