@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import fetcher from "../../apis/fetcher";
+import toast from "react-hot-toast";
+
+const userLocal = JSON.parse(localStorage.getItem("currentUser"))
 
 
  export const loginApi = createAsyncThunk(
@@ -18,14 +21,20 @@ import fetcher from "../../apis/fetcher";
 const authSlice = createSlice({
     name: "auth",
     initialState:{
-        currentUser: null,
+        currentUser: userLocal,
         isLoading: false,
         error: null,
     },
     reducers:{
+    
         logout: (state) => {
             state.currentUser = null;
             localStorage.removeItem("currentUser");
+            toast.success("Đăng xuất thành công");
+        },
+        login: (state, {payload}) => {
+            state.currentUser = payload;
+            localStorage.setItem("currentUser", JSON.stringify(payload));
         }
     },
     extraReducers: (builder) => {

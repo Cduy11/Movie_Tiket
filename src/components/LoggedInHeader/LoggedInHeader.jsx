@@ -2,11 +2,19 @@ import { AppBar, Toolbar, IconButton } from "@mui/material";
 import { PersonOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { PATH } from "../../routes/path";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/slices/authSlice";
 
 
 function LoggedInHeader() {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
-    <AppBar position="static" color="transparent" elevation={0}>
+    <AppBar position="static" color="transparent" elevation={0}>  
       <Toolbar className="flex justify-between px-8 header-container">
         {/* Logo */}
         <div className="flex items-center header-logo">
@@ -27,14 +35,14 @@ function LoggedInHeader() {
 
         {/* Login and Register */}
         <div className="flex items-center space-x-6">
-          <Link to={PATH.LOGIN} className="flex items-center text-black">
+          <Link className="flex items-center text-black">
             <IconButton className="items-center-icons">
               <PersonOutline />
             </IconButton>
             <span className="text-lg">Thông Tin</span>
           </Link>
           <div className="border-r border-gray-300 h-8 mx-4"></div>
-          <Link to={PATH.REGISTER} className="flex items-center text-black">
+          <Link to={PATH.LOGIN} className="flex items-center text-black" onClick={handleLogout}>
             <IconButton className="items-center-icons">
               <PersonOutline />
             </IconButton>

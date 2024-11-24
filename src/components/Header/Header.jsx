@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, IconButton, Button } from "@mui/material";
+import { AppBar, Toolbar, IconButton } from "@mui/material";
 import { PersonOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { PATH } from "../../routes/path";
