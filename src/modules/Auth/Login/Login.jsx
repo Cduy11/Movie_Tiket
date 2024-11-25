@@ -1,11 +1,10 @@
 import { AccountCircle } from "@mui/icons-material";
 import "./Login.css";
 import { Button, Checkbox, TextField } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
 import { loginApi } from "../../../store/slices/authSlice";
 import toast from "react-hot-toast";
 import { PATH } from "../../../routes/path";
@@ -18,14 +17,14 @@ const schema = yup.object({
 })
 
 export default function Login() {
-  const { dispatch, navigate, isLoading, error } = useAuth();
+  const { dispatch, navigate } = useAuth();
   const {register, handleSubmit, formState: {errors}} = useForm({
     resolver: yupResolver(schema)
   })
   
   const onSubmit = (data) => {
     dispatch(loginApi(data))
-      .unwrap() // Sử dụng unwrap() để xử lý lỗi từ Redux Thunk
+      .unwrap() 
       .then((payload) => {
         // Kiểm tra cấu trúc payload trả về
         if (payload && payload.content) {
