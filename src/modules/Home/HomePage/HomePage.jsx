@@ -42,7 +42,7 @@ export default function HomePage() {
     cinemaData,
     cinema,
     movieTime,
-    selectedCinema,
+    selectedCinema: selectedCinemaFromHook,
     setSelectedCinema,
     selectedCinemaId,
     setSelectedCinemaId,
@@ -57,11 +57,16 @@ export default function HomePage() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [value, setValue] = useState(0);
 
+  // Thêm state cho các bộ lọc
+  const [selectedMovie, setSelectedMovie] = useState("");
+  const [selectedCinemaFilter, setSelectedCinemaFilter] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+
   // Fetch dữ liệu phim và rạp phim
   useEffect(() => {
-    dispatch(listMoviePagination({ group, page, pageSize }));
+    dispatch(listMoviePagination({ group, page, pageSize, selectedMovie, selectedCinema: selectedCinemaFilter, selectedDate }));
     dispatch(listCinemaComplexApi());
-  }, [dispatch, group, page, pageSize]);
+  }, [dispatch, group, page, pageSize, selectedMovie, selectedCinemaFilter, selectedDate]);
 
   // Xử lý thay đổi tab (chọn hệ thống rạp phim)
   const handleChange = (event, newValue) => {
@@ -77,6 +82,36 @@ export default function HomePage() {
     navigate(`/booking/${maPhim}`);
   };
 
+  // Xử lý thay đổi bộ lọc
+  const handleMovieChange = (event) => {
+    setSelectedMovie(event.target.value);
+  };
+
+  const handleCinemaChange = (event) => {
+    setSelectedCinemaFilter(event.target.value);
+  };
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  // Hàm lọc để lấy ngày giờ chiếu phim của rạp đã chọn
+  const getFilteredShowtimes = () => {
+    if (!selectedCinemaFilter || !selectedMovie) return [];
+
+    return movieTime
+      .filter((cinemaSystem) => cinemaSystem.maHeThongRap === selectedCinemaFilter)
+      .flatMap((cinemaSystem) =>
+        cinemaSystem.lstCumRap.flatMap((cinemaHall) =>
+          cinemaHall.danhSachPhim
+            .filter((movie) => movie.maPhim === selectedMovie)
+            .flatMap((movie) => movie.lstLichChieuTheoPhim)
+        )
+      );
+  };
+
+  // Sử dụng hàm lọc để lấy danh sách ngày giờ chiếu
+  const filteredShowtimes = getFilteredShowtimes();
 
   return (
     <>
@@ -84,24 +119,43 @@ export default function HomePage() {
       <div className="movie-list"></div>
       {/* search */}
       <div className="filter-container">
-        <Select defaultValue="" displayEmpty className="filter-select">
+        <Select value={selectedMovie} onChange={handleMovieChange} displayEmpty className="filter-select">
           <MenuItem value="" disabled>
             Phim
           </MenuItem>
-          <MenuItem value="1">TAM VE ĐEN THIEN ĐƯỜNG</MenuItem>
+          {movies.map((movie) => (
+            <MenuItem key={movie.maPhim} value={movie.maPhim}>
+              {movie.tenPhim}
+            </MenuItem>
+          ))}
         </Select>
-        <Select defaultValue="" displayEmpty className="filter-select">
+        <Select value={selectedCinemaFilter} onChange={handleCinemaChange} displayEmpty className="filter-select">
           <MenuItem value="" disabled>
             Rạp
           </MenuItem>
+          {cinemaData.map((cinema) => (
+            <MenuItem key={cinema.maHeThongRap} value={cinema.maHeThongRap}>
+              {cinema.tenHeThongRap}
+            </MenuItem>
+          ))}
         </Select>
-        <Select defaultValue="" displayEmpty className="filter-select">
+        <Select value={selectedDate} onChange={handleDateChange} displayEmpty className="filter-select">
           <MenuItem value="" disabled>
             Ngày giờ chiếu
           </MenuItem>
+          {filteredShowtimes.map((showtime) => {
+            const date = new Date(showtime.ngayChieuGioChieu);
+            return !isNaN(date.getTime()) ? (
+              <MenuItem key={showtime.maLichChieu} value={showtime.ngayChieuGioChieu}>
+                {format(date, "dd/MM/yyyy", { locale: vi })}
+              </MenuItem>
+            ) : null;
+          })}
         </Select>
-        <Button variant="contained" className="buy-ticket-button">
-          <Link to={PATH.BookingSeat}>MUA VÉ NGAY</Link>
+        <Button variant="contained" className="buy-ticket-button" disabled={!selectedDate}>
+          <Link to={`/booking-seat/${filteredShowtimes.find(showtime => showtime.ngayChieuGioChieu === selectedDate)?.maLichChieu}`}>
+            MUA VÉ NGAY
+          </Link>
         </Button>
       </div>
       {/* List Movies */}
@@ -202,7 +256,7 @@ export default function HomePage() {
               {/* Tabs for Cinema Systems */}
               <Tabs
                 orientation="vertical"
-                variant="scr ollable"
+                variant="scrollable"
                 value={value}
                 onChange={handleChange}
                 aria-label="Danh sách hệ thống rạp"
@@ -256,7 +310,7 @@ export default function HomePage() {
                 {movieTime
                   .filter(
                     (cinemaSystem) =>
-                      cinemaSystem.maHeThongRap === selectedCinema
+                      cinemaSystem.maHeThongRap === selectedCinemaFromHook
                   )
                   .map((cinemaSystem) =>
                     cinemaSystem.lstCumRap.map((cinemaHall) =>
