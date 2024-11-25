@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginApi } from "../../../store/slices/authSlice";
 import toast from "react-hot-toast";
 import { PATH } from "../../../routes/path";
+import useAuth from "../../../hooks/useAuth";
 
 
 const schema = yup.object({
@@ -17,32 +18,37 @@ const schema = yup.object({
 })
 
 export default function Login() {
-  const dispatch = useDispatch();
-  const { isLoading, error} = useSelector((state) => state.auth);
-  const navigate = useNavigate();
+  const { dispatch, navigate, isLoading, error } = useAuth();
   const {register, handleSubmit, formState: {errors}} = useForm({
     resolver: yupResolver(schema)
   })
   
   const onSubmit = (data) => {
     dispatch(loginApi(data))
-      .then(({payload}) => {
-        console.log("Login successful, payload:", payload);
-        toast.success("Đăng nhập thành công");
-        localStorage.setItem("currentUser", JSON.stringify(payload));
-        const userType = payload.content.maLoaiNguoiDung;
-        if(userType === "KhachHang") {
-          navigate(PATH.HOME) 
+      .unwrap() // Sử dụng unwrap() để xử lý lỗi từ Redux Thunk
+      .then((payload) => {
+        // Kiểm tra cấu trúc payload trả về
+        if (payload && payload.content) {
+          toast.success("Đăng nhập thành công");
+          localStorage.setItem("currentUser", JSON.stringify(payload.content));
+          
+          const userType = payload.content.maLoaiNguoiDung;
+          if (userType === "KhachHang") {
+            navigate(PATH.HOME);
+          } else {
+            navigate(PATH.ADMIN);
+          }
         } else {
-          navigate(PATH.ADMIN)
+          toast.error(payload.message || "Đăng nhập thất bại, vui lòng thử lại.");
         }
       })
       .catch((error) => {
-        console.log("Error during login:", error);
-        toast.error(error.message);
+        // Xử lý lỗi từ server hoặc mạng
+        const errorMessage = error.response?.data?.message || error.message || "Đăng nhập thất bại, vui lòng thử lại.";
+        toast.error(errorMessage);
       });
-  }
-
+  };
+  
   return (
     <div className="login-container background-image">
       <div className="login-box">

@@ -9,7 +9,6 @@ export const listCinemaComplexApi = createAsyncThunk(
       const response = await fetcher.get(`/QuanLyRap/LayThongTinHeThongRap`);
       return response.data.content;
     } catch (error) {
-      console.error("Error fetching cinema data:", error);
       throw error.response ? error.response.data.message : error.message;
     }
   }
