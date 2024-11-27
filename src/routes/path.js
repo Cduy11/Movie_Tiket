@@ -9,5 +9,6 @@
         HOME: "/",
         Booking: `/booking/:maPhim`,
         BookingSeat: `/booking-seat/:maLichChieu`,
+        PROFILE: "/profile",
         // Admin
     }

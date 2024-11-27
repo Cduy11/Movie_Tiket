@@ -1,0 +1,92 @@
+.profile-container {
+  width: 100%;
+  height: auto;
+  background-image: url("/src/assets/img/backapp.b46ef3a1.jpg");
+}
+
+.profile {
+  width: 100%;
+  height: auto;
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.profile-title {
+  font-size: 20px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.ticket {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.ticket-date {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.ticket-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: red !important;
+}
+
+.movie-title {
+  color: red !important;
+}
+
+.ticket-details {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.ticket-cinema {
+  font-size: 14px;
+  color: green !important;
+  font-weight: bold;
+}
+
+.ticket-seat {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.ticket-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-date,
+.ticket-title,
+.ticket-details,
+.ticket-cinema,
+.ticket-seat {
+  margin-bottom: 8px;
+}
+
+.movie-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.ticket-cinema,
+.ticket-seat {
+  font-size: 14px;
+  color: #555;
+}

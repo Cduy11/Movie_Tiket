@@ -6,6 +6,8 @@ import { bookingSeatApi, getBookingSeatApi } from "../../../store/slices/booking
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { PATH } from "../../../routes/path";
+import Loading from "../../../components/Loading/Loading";
+
 
 export default function BookingSeat() {
   const { maLichChieu } = useParams();
@@ -15,14 +17,18 @@ export default function BookingSeat() {
   const bookingInfo = bookingSeat?.thongTinPhim ? [bookingSeat.thongTinPhim] : [];
   const bookingMovieSeat = bookingSeat?.danhSachGhe || [];
 
-  useEffect(() => {
-    if (maLichChieu && maLichChieu !== ":maLichChieu") { 
-      dispatch(getBookingSeatApi({ maLichChieu }));
-    }
-  }, [dispatch, maLichChieu]);
-
+  const [loading, setLoading] = useState(true);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    if (maLichChieu && maLichChieu !== ":maLichChieu") { 
+      dispatch(getBookingSeatApi({ maLichChieu }))
+        .unwrap()
+        .then(() => setLoading(false))
+        .catch(() => setLoading(false));
+    }
+  }, [dispatch, maLichChieu]);
 
   const handleSeatClick = (seat) => {
     if (seat.daDat) return; 
@@ -43,11 +49,7 @@ export default function BookingSeat() {
     setTotalPrice(newTotalPrice);
   }, [selectedSeats, bookingMovieSeat]);
 
-
-  // handle booking
   const handleBooking = () => {
-
- 
     if (window.confirm("Bạn có chắc chắn muốn đặt vé không?")) {
       const bookingData = {
         maLichChieu,
@@ -71,6 +73,10 @@ export default function BookingSeat() {
         });
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="booking-seat">

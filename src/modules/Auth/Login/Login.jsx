@@ -1,4 +1,4 @@
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
 import "./Login.css";
 import { Button, Checkbox, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -9,6 +9,8 @@ import { loginApi } from "../../../store/slices/authSlice";
 import toast from "react-hot-toast";
 import { PATH } from "../../../routes/path";
 import useAuth from "../../../hooks/useAuth";
+import IconButton from "@mui/material/IconButton";
+import { useState } from "react";
 
 
 const schema = yup.object({
@@ -21,7 +23,12 @@ export default function Login() {
   const {register, handleSubmit, formState: {errors}} = useForm({
     resolver: yupResolver(schema)
   })
-  
+  const [showPassword, setShowPassword] =useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   const onSubmit = (data) => {
     dispatch(loginApi(data))
       .unwrap() 
@@ -48,6 +55,7 @@ export default function Login() {
       });
   };
   
+  
   return (
     <div className="login-container background-image">
       <div className="login-box">
@@ -67,13 +75,25 @@ export default function Login() {
             helperText={errors.taiKhoan?.message}
           />
           <TextField
-            id="outlined-basic"
+            id="outlined-password-input"
             label="Mật Khẩu"
             variant="outlined"
             className="login-input"
+            type={showPassword ? "text" : "password"}
             {...register("matKhau")}
             error={!!errors.matKhau}
             helperText={errors.matKhau?.message}
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              ),
+            }}
           />
           <div className="remember-me">
             <Checkbox />

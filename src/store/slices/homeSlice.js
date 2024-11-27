@@ -18,10 +18,24 @@ export const listMoviePagination = createAsyncThunk(
   }
 );
 
+// call api lịch sử đặt vé
+export const listTicketHistory = createAsyncThunk(
+  "home/listTicketHistory",
+  async () => {
+    try {
+      const response = await fetcher.post("/QuanLyNguoiDung/ThongTinTaiKhoan");
+      return response.data.content;
+    } catch (error) {
+      throw error.response ? error.response.data.message : error.message;
+    }
+  }
+)
+
 const homeSlice = createSlice({
   name: "home",
   initialState: {
     movies: [],
+    ticketHistory: [],
     isLoading: false,
     error: null,
   },
@@ -36,6 +50,17 @@ const homeSlice = createSlice({
         state.movies = payload;
       })
       .addCase(listMoviePagination.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(listTicketHistory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(listTicketHistory.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.ticketHistory = payload;
+      })
+      .addCase(listTicketHistory.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {  Link, useParams } from "react-router-dom";
 import { getShowTimeMovieSystemApi } from "../../../store/slices/cinemaSlice";
+import Loading from "../../../components/Loading/Loading";
 
 export default function Booking() {
   const { maPhim } = useParams();
@@ -15,11 +16,15 @@ export default function Booking() {
 
   const [value, setValue] = useState(0);
   const [selectedCinema, setSelectedCinema] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Gọi API khi `maPhim` thay đổi
   useEffect(() => {
     if (maPhim) {
-      dispatch(getShowTimeMovieSystemApi({ maPhim }));
+      dispatch(getShowTimeMovieSystemApi({ maPhim }))
+        .unwrap()
+        .then(() => setLoading(false))
+        .catch(() => setLoading(false));
     }
   }, [dispatch, maPhim]);
 
@@ -29,6 +34,10 @@ export default function Booking() {
     const selected = showCinema[newValue];
     setSelectedCinema(selected);
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="bg-gray-900 text-white p-8 container-booking">

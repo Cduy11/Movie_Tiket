@@ -35,7 +35,7 @@ function LoggedInHeader() {
 
         {/* Login and Register */}
         <div className="flex items-center space-x-6">
-          <Link className="flex items-center text-black">
+          <Link to={PATH.PROFILE} className="flex items-center text-black">
             <IconButton className="items-center-icons">
               <PersonOutline />
             </IconButton>
