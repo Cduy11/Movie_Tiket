@@ -2,12 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import "./BookingSeat.css";
 import { Grid, Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getBookingSeatApi } from "../../../store/slices/bookingSlice";
-import { useParams } from "react-router-dom";
+import { bookingSeatApi, getBookingSeatApi } from "../../../store/slices/bookingSlice";
+import { useParams, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { PATH } from "../../../routes/path";
 
 export default function BookingSeat() {
   const { maLichChieu } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { bookingSeat } = useSelector((state) => state.bookingSeat);
   const bookingInfo = bookingSeat?.thongTinPhim ? [bookingSeat.thongTinPhim] : [];
   const bookingMovieSeat = bookingSeat?.danhSachGhe || [];
@@ -21,21 +24,17 @@ export default function BookingSeat() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  //   hàm chọn ghế
   const handleSeatClick = (seat) => {
     if (seat.daDat) return; 
     setSelectedSeats((prevSelectedSeats) => {
       if (prevSelectedSeats.includes(seat.maGhe)) {
-        // Bỏ chọn ghế nếu đã được chọn
         return prevSelectedSeats.filter((maGhe) => maGhe !== seat.maGhe);
       } else {
-        // Chọn ghế
         return [...prevSelectedSeats, seat.maGhe];
       }
     });
   };
 
-  // tính tiền
   useEffect(() => {
     const newTotalPrice = selectedSeats.reduce((total, maGhe) => {
       const seat = bookingMovieSeat.find((ghe) => ghe.maGhe === maGhe);
@@ -43,6 +42,35 @@ export default function BookingSeat() {
     }, 0);
     setTotalPrice(newTotalPrice);
   }, [selectedSeats, bookingMovieSeat]);
+
+
+  // handle booking
+  const handleBooking = () => {
+
+ 
+    if (window.confirm("Bạn có chắc chắn muốn đặt vé không?")) {
+      const bookingData = {
+        maLichChieu,
+        danhSachVe: selectedSeats.map((maGhe) => {
+          const seat = bookingMovieSeat.find((ghe) => ghe.maGhe === maGhe);
+          return {
+            maGhe: seat.maGhe,
+            giaVe: seat.giaVe
+          }
+        })
+      };
+      dispatch(bookingSeatApi(bookingData))
+        .unwrap()
+        .then(() => {
+          toast.success("Đặt vé thành công!");
+          navigate(PATH.HOME); 
+        })
+        .catch(() => {
+          toast.error(`Vui lòng đăng nhập để đặt vé! `);
+          navigate(PATH.LOGIN);
+        });
+    }
+  };
 
   return (
     <div className="booking-seat">
@@ -108,7 +136,7 @@ export default function BookingSeat() {
               </div>
             ))}
           </div>
-          <Button variant="contained" className="book-button">
+          <Button variant="contained" className="book-button" onClick={handleBooking}>
             ĐẶT VÉ
           </Button>
         </Grid>

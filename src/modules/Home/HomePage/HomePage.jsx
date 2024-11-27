@@ -30,7 +30,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { PATH } from "../../../routes/path";
+
 
 export default function HomePage() {
   const navigate = useNavigate();
